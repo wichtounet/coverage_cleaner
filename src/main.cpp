@@ -12,7 +12,8 @@ struct range {
     std::size_t begin;
     std::size_t end;
 
-    range(std::size_t begin, std::size_t end) : begin(begin), end(end) {}
+    range(std::size_t begin, std::size_t end)
+            : begin(begin), end(end) {}
 };
 
 bool verbose = false;
@@ -22,7 +23,7 @@ bool verbose = false;
 rapidxml::xml_document<> source_doc;
 rapidxml::xml_document<> target_doc;
 
-rapidxml::xml_node<>* copy_package(rapidxml::xml_document<>& source_doc, rapidxml::xml_node<>* package_node){
+rapidxml::xml_node<>* copy_package(rapidxml::xml_document<>& source_doc, rapidxml::xml_node<>* package_node) {
     //Create the "package" node (rates are not copied on purpose)
     auto package_target = target_doc.allocate_node(rapidxml::node_element, "package");
     package_target->append_attribute(target_doc.allocate_attribute("name", package_node->first_attribute("name")->value()));
@@ -34,7 +35,7 @@ rapidxml::xml_node<>* copy_package(rapidxml::xml_document<>& source_doc, rapidxm
 
     auto classes_sources = package_node->first_node("classes");
 
-    for(auto* class_source = classes_sources->first_node("class"); class_source; class_source = class_source->next_sibling()){
+    for (auto* class_source = classes_sources->first_node("class"); class_source; class_source = class_source->next_sibling()) {
         std::string class_branch_rate(class_source->first_attribute("branch-rate")->value());
         std::string class_line_rate(class_source->first_attribute("line-rate")->value());
 
@@ -98,7 +99,7 @@ rapidxml::xml_node<>* copy_package(rapidxml::xml_document<>& source_doc, rapidxm
             bool exclude = false;
 
             for (auto& range : ignored_ranges) {
-                if(line >= range.begin && line <= range.end){
+                if (line >= range.begin && line <= range.end) {
                     exclude = true;
                     break;
                 }
@@ -120,22 +121,22 @@ rapidxml::xml_node<>* copy_package(rapidxml::xml_document<>& source_doc, rapidxm
 
 } //end of anonymous namespace
 
-int main(int argc, char* argv[]){
+int main(int argc, char* argv[]) {
     //Argument counter
     std::size_t i = 1;
 
     //Collect the arguments
-    for(; i < std::size_t(argc); ++i){
+    for (; i < std::size_t(argc); ++i) {
         std::string arg(argv[i]);
 
-        if(arg == "--verbose"){
+        if (arg == "--verbose") {
             verbose = true;
         } else {
             break;
         }
     }
 
-    if(argc - i + 1 < 2){
+    if (argc - i + 1 < 2) {
         std::cout << "coverage_merger: not enough arguments" << std::endl;
         return 1;
     }
@@ -144,7 +145,7 @@ int main(int argc, char* argv[]){
     std::string source_path(argv[i]);
     std::string target_path(argv[i + 1]);
 
-    if(verbose){
+    if (verbose) {
         std::cout << "Source file: " << source_path << std::endl;
         std::cout << "Target file: " << target_path << std::endl;
     }
@@ -178,12 +179,12 @@ int main(int argc, char* argv[]){
 
     //1. Copy all relevant packages from source -> target
 
-    for(auto* package_node = packages_source->first_node("package"); package_node; package_node = package_node->next_sibling()){
+    for (auto* package_node = packages_source->first_node("package"); package_node; package_node = package_node->next_sibling()) {
         std::string package_name(package_node->first_attribute("name")->value());
         std::string package_branch_rate(package_node->first_attribute("branch-rate")->value());
         std::string package_line_rate(package_node->first_attribute("line-rate")->value());
 
-        if(verbose){
+        if (verbose) {
             std::cout << "Copy package " << package_name << " from source to target" << std::endl;
         }
 

@@ -40,7 +40,7 @@ rapidxml::xml_node<>* copy_package(rapidxml::xml_document<>& source_doc, rapidxm
         std::string class_line_rate(class_source->first_attribute("line-rate")->value());
 
         //Create the "class" node
-        auto class_target = target_doc.allocate_node(rapidxml::node_element, "classes");
+        auto class_target = target_doc.allocate_node(rapidxml::node_element, "class");
 
         std::string filename(class_source->first_attribute("filename")->value());
 

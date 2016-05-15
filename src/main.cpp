@@ -71,7 +71,6 @@ rapidxml::xml_node<>* copy_package(rapidxml::xml_document<>& source_doc, rapidxm
                 } else if (line.find("COVERAGE_EXCLUDE_END") != std::string::npos) {
                     if (in_range) {
                         ignored_ranges.emplace_back(range_start, i);
-                        std::cout << "range " << range_start << ":" << i << std::endl;
                     }
 
                     in_range = false;

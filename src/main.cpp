@@ -137,7 +137,7 @@ int main(int argc, char* argv[]) {
     }
 
     if (argc - i + 1 < 2) {
-        std::cout << "coverage_merger: not enough arguments" << std::endl;
+        std::cout << "coverage_cleaner: not enough arguments" << std::endl;
         return 1;
     }
 

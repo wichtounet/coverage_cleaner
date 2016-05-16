@@ -74,6 +74,8 @@ rapidxml::xml_node<>* copy_package(rapidxml::xml_document<>& source_doc, rapidxm
                     }
 
                     in_range = false;
+                } else if (line.find("COVERAGE_EXCLUDE_LINE") != std::string::npos) {
+                    ignored_ranges.emplace_back(i, i);
                 } else {
                     // Left trim
                     line.erase(line.begin(), std::find_if(line.begin(), line.end(), std::not1(std::ptr_fun<int, int>(std::isspace))));

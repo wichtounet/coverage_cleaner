@@ -70,18 +70,18 @@ rapidxml::xml_node<>* copy_package(rapidxml::xml_document<>& source_doc, rapidxm
                     in_range = true;
                 } else if (line.find("COVERAGE_EXCLUDE_END") != std::string::npos) {
                     if (in_range) {
-                        ignored_ranges.emplace_back(range_start, i);
+                        ignored_ranges.emplace_back(range_start+1, i+1);
                     }
 
                     in_range = false;
                 } else if (line.find("COVERAGE_EXCLUDE_LINE") != std::string::npos) {
-                    ignored_ranges.emplace_back(i, i);
+                    ignored_ranges.emplace_back(i+1, i+1);
                 } else {
                     // Left trim
                     line.erase(line.begin(), std::find_if(line.begin(), line.end(), std::not1(std::ptr_fun<int, int>(std::isspace))));
 
                     if (line.find("cpp_unreachable(") == 0) {
-                        ignored_ranges.emplace_back(i, i);
+                        ignored_ranges.emplace_back(i+1, i+1);
                     }
                 }
 
